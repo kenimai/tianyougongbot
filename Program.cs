@@ -69,14 +69,20 @@ namespace TainYouGongBot
             }
             else
             {
+                string DisplayMessage = "";
                 var chat = _api.Chat.CreateConversation();
 
                 chat.AppendUserInput(command);
 
                 await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
                 {
-                    //Console.Write(res);
-                    _ = message.Channel.SendMessageAsync(res);
+                    //Console.Write(res);                    
+                    DisplayMessage += res;           
+                }
+
+                if (!string.IsNullOrEmpty(DisplayMessage))
+                {
+                    _ = message.Channel.SendMessageAsync(DisplayMessage);
                 }
             }
 
